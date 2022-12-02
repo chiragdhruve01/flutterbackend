@@ -82,6 +82,7 @@ class Country(models.Model):
     name = models.CharField(max_length=50,blank=True,null=True)
     place = models.CharField(max_length=50,blank=True,null=True)
     destination = models.CharField(max_length=50,blank=True,null=True)
+    description = models.TextField(blank=True,null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     is_verified = models.BooleanField(default=False,blank=True,null=True)

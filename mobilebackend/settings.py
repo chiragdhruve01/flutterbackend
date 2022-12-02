@@ -41,8 +41,13 @@ INSTALLED_APPS = [
     'rest_framework',
     'user',
     'travel',
-
 ]
+
+# CORS_ORIGINAL_ALLOW_ALL = True
+# CORS_ORIGINAL_WHITELIST = ('127.0.0.1')
+# CORS_ALLOWED_CREDENTIALS = True
+CORS_ALLOWED_ORIGINS = ["http://127.0.0.1:4200",
+                        "http://localhost:4200"]
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
