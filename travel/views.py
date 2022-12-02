@@ -30,34 +30,34 @@ class addCompany(views.APIView):
         data = request.data
         print("data",data)
         user_serializer = serializers.CountrySerializer(data=data)
-        name = request.data.get('name',None)
-        family = models.Country.objects.filter(name=name).exists()
+        place = request.data.get('place',None)
+        family = models.Country.objects.filter(place=place).exists()
         if family is False:
             if user_serializer.is_valid():
-                user_serializer.save()
-                return JsonResponse({"success":"Country Added Successfully" + name},safe=False)
+                user_serializer.save(is_verified=True,name=place)
+                return JsonResponse({"success":"Country Added Successfully " + place},safe=False)
             else:
                 print("user_serializer",user_serializer.errors)
                 return JsonResponse({"error":user_serializer.errors},safe=False)
-        return Response({"error":name +" Country Already Exists"},400)
+        return Response({"error":place +" Country Already Exists"},400)
 class addState(views.APIView):
    
     def post(self, request):
         data = request.data
         print("data",data)
         user_serializer = serializers.StateSerializer(data=data)
-        name = request.data.get('name',None)
+        place = request.data.get('place',None)
         country = request.data.get('countryname',None)
         css = models.Country.objects.filter(name=country)
-        family = models.State.objects.filter(name=name,country=css).exists()
+        family = models.State.objects.filter(place=place,country=css).exists()
         if family is False:
             if user_serializer.is_valid():
-                user_serializer.save(country=css)
-                return JsonResponse({"success":"State Added Successfully" + name},safe=False)
+                user_serializer.save(country=css,name=place)
+                return JsonResponse({"success":"State Added Successfully" + place},safe=False)
             else:
                 print("user_serializer",user_serializer.errors)
                 return JsonResponse({"error":user_serializer.errors},safe=False)
-        return Response({"error":name +" State Already Exists"},400)
+        return Response({"error":place +" State Already Exists"},400)
 
 class companyList(views.APIView):
     
