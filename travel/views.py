@@ -65,6 +65,13 @@ class companyList(views.APIView):
         user = models.Country.objects.filter()
         serialize = serializers.CountrySerializer(user, many=True)
         return Response({'serializer': serialize.data})
+
+class companyDetails(views.APIView):
+    
+    def get(self,request,id=0):
+        user = models.Country.objects.filter(id=id)
+        serialize = serializers.CountrySerializer(user, many=True)
+        return Response({'company': serialize.data})
         
 class comstateList(views.APIView):
     
