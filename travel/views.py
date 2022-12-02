@@ -59,6 +59,20 @@ class addState(views.APIView):
                 return JsonResponse({"error":user_serializer.errors},safe=False)
         return Response({"error":name +" State Already Exists"},400)
 
+class companyList(views.APIView):
+    
+    def get(self,request):
+        user = models.Country.objects.filter()
+        serialize = serializers.CountrySerializer(user, many=True)
+        return Response({'serializer': serialize.data})
+        
+class comstateList(views.APIView):
+    
+    def get(self,request,id=0):
+        user = models.State.objects.filter(country__id=id)
+        serialize = serializers.StateSerializer(user, many=True)
+        return Response({'serializer': serialize.data})
+
 class AdminRegister(views.APIView):
    
     def post(self, request):
