@@ -24,6 +24,41 @@ def index(request):
 
 
 
+class addCompany(views.APIView):
+   
+    def post(self, request):
+        data = request.data
+        print("data",data)
+        user_serializer = serializers.CountrySerializer(data=data)
+        name = request.data.get('name',None)
+        family = models.Country.objects.filter(name=name).exists()
+        if family is False:
+            if user_serializer.is_valid():
+                user_serializer.save()
+                return JsonResponse({"success":"Country Added Successfully" + name},safe=False)
+            else:
+                print("user_serializer",user_serializer.errors)
+                return JsonResponse({"error":user_serializer.errors},safe=False)
+        return Response({"error":name +" Country Already Exists"},400)
+class addState(views.APIView):
+   
+    def post(self, request):
+        data = request.data
+        print("data",data)
+        user_serializer = serializers.StateSerializer(data=data)
+        name = request.data.get('name',None)
+        country = request.data.get('countryname',None)
+        css = models.Country.objects.filter(name=country)
+        family = models.State.objects.filter(name=name,country=css).exists()
+        if family is False:
+            if user_serializer.is_valid():
+                user_serializer.save(country=css)
+                return JsonResponse({"success":"State Added Successfully" + name},safe=False)
+            else:
+                print("user_serializer",user_serializer.errors)
+                return JsonResponse({"error":user_serializer.errors},safe=False)
+        return Response({"error":name +" State Already Exists"},400)
+
 class AdminRegister(views.APIView):
    
     def post(self, request):
