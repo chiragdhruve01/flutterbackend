@@ -76,6 +76,20 @@ USER_TYPE = (
     ('user','user'),
 )
 
+class Travel(models.Model):
+    
+    image = models.ImageField(upload_to='media/travel',blank=True,null=True)
+    name = models.CharField(max_length=50,blank=True,null=True)
+    place = models.CharField(max_length=50,blank=True,null=True)
+    destination = models.CharField(max_length=50,blank=True,null=True)
+    description = models.TextField(blank=True,null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    is_verified = models.BooleanField(default=False,blank=True,null=True)
+
+    def __str__(self):
+        return str(self.place)
+        
 class Country(models.Model):
     
     image = models.ImageField(upload_to='media/country',blank=True,null=True)
