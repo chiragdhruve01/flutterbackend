@@ -24,6 +24,23 @@ def index(request):
 
 
 
+class addTravelSpots(views.APIView):
+   
+    def post(self, request):
+        data = request.data
+        print("data",data)
+        user_serializer = serializers.TravelSerializer(data=data)
+        place = request.data.get('place',None)
+        family = models.Travel.objects.filter(place=place).exists()
+        if family is False:
+            if user_serializer.is_valid():
+                user_serializer.save(is_verified=True,name=place)
+                return JsonResponse({"success":"Travel Spot Added Successfully " + place},safe=False)
+            else:
+                print("user_serializer",user_serializer.errors)
+                return JsonResponse({"error":user_serializer.errors},safe=False)
+        return Response({"error":place +" Travel Spot Already Exists"},400)
+        
 class addCompany(views.APIView):
    
     def post(self, request):
