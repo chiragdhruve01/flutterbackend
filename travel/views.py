@@ -40,7 +40,7 @@ class addTravelSpots(views.APIView):
                 print("user_serializer",user_serializer.errors)
                 return JsonResponse({"error":user_serializer.errors},safe=False)
         return Response({"error":place +" Travel Spot Already Exists"},400)
-        
+
 class addCompany(views.APIView):
    
     def post(self, request):
@@ -76,6 +76,13 @@ class addState(views.APIView):
                 return JsonResponse({"error":user_serializer.errors},safe=False)
         return Response({"error":place +" State Already Exists"},400)
 
+class travelList(views.APIView):
+    
+    def get(self,request):
+        user = models.Travel.objects.filter()
+        serialize = serializers.TravelSerializer(user, many=True)
+        return Response({'serializer': serialize.data})
+        
 class companyList(views.APIView):
     
     def get(self,request):

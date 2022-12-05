@@ -6,6 +6,8 @@ urlpatterns = [
     path('',views.index,name='index'),
 
     path('addTravel',views.addTravelSpots.as_view(),name='addTravel'),
+    path('travelList',views.travelList.as_view(),name="travelList"),
+
     path('addCompany',views.addCompany.as_view(),name='addCompany'),
     path('addState',views.addState.as_view(),name='addState'),
     path('signup',views.AdminRegister.as_view(),name='register'),
